@@ -1,6 +1,8 @@
 FROM ubuntu:groovy
 
 ENV USER wagon
+ENV UID "$UID"
+ENV GID "$GID"
 
 # Setup Timezone env variable
 ENV TZ Europe/Madrid
@@ -11,8 +13,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 # Install git, zsh, postgresql, libraries for Ruby, etc.
 RUN apt update && \
   apt install -y git apt-transport-https apt-utils unzip zsh curl vim \
-  imagemagick jq postgresql postgresql-contrib libpq-dev build-essential \
-  software-properties-common sudo \
+  imagemagick jq build-essential software-properties-common sudo \
   tklib zlib1g-dev libssl-dev libffi-dev libxml2 libxml2-dev libxslt1-dev \
   libreadline-dev && \
   apt clean
@@ -22,13 +23,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key C99B11DEB97
 RUN add-apt-repository https://cli.github.com/packages && apt update && apt install -y gh
 
 # Create user
-RUN useradd --create-home --shell /usr/bin/zsh $USER
-
-# Setup PostgreSQL
-RUN /etc/init.d/postgresql start
-RUN echo "$USER ALL=NOPASSWD:/etc/init.d/postgresql start" | tee /etc/sudoers.d/postgresql
-RUN chmod 440 /etc/sudoers.d/postgresql && echo "sudo /etc/init.d/postgresql start" >> /home/$USER/.zshrc
-
+RUN useradd --create-home --shell /usr/bin/zsh --uid ${UID} --gid ${GID} $USER
 
 # RUN mv /bin/sh /bin/sh-old && ln -s /bin/bash /bin/sh
 
