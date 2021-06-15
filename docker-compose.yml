@@ -1,0 +1,25 @@
+---
+  version: "3"
+  services:
+    lewagon:
+      image: runfire9/lw-bootcamp
+      container_name: lewagon
+      volumes:
+        - home-volume:/home/wagon
+      restart: on-failure
+      command: ["sleep","infinity"]
+
+    lewagon-postgres:
+      image: postgres:12-alpine
+      container_name: lewagon-postgres
+      environment:
+        - POSTGRES_PASSWORD=${LW_POSTGRES_ROOT_PASSWORD}
+        - USER=${USER}
+      volumes:
+        - ${LW_DATABASE_PATH}:/var/lib/postgresql/data/
+        # - /etc/passwd:/etc/passwd:ro
+        - ./init-database-user.sh:/docker-entrypoint-initdb.d/init-database-user.sh
+
+  volumes:
+    home-volume:
+      external: true
