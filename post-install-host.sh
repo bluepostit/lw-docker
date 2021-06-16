@@ -15,6 +15,9 @@ touch $CONTAINER_MOUNTED_HOME_PATH/.zshrc
 # Clone your dotfiles repo into the container's ~/code/ directory
 gh repo clone $GITHUB_USERNAME/dotfiles $CONTAINER_MOUNTED_HOME_PATH/code/dotfiles
 
+# Copy the post-install script into the container:
+cp ./post-install.sh $CONTAINER_MOUNTED_HOME_PATH/
+
 # Open a zsh terminal inside the container
 docker exec -ti -uwagon lewagon zsh
 

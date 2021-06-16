@@ -7,12 +7,20 @@
     ```
 2. Fill in values for all variables in your `.env` file. For `USER`, give your Linux user name.
 
-## Build
-1. Create a named volume for your container's home directory:
-    ```bash
-    sudo docker volume create --name=home-volume
-    ```
-2. Now pull the image and build a container with it:
+## Create a container
+1. Pull the image and build a container with it:
     ```bash
     sudo docker-compose up -d
     ```
+2. Run the post-installation script on your Docker **host**:
+    ```bash
+    bash post-install-host.sh
+    ```
+    You will now have a terminal opened in the Docker container.
+3. In the Docker **container**, run the post-installation script:
+    ```bash
+    cd ~ && bash post-install.sh
+    ```
+
+## Issues
+- There is still an issue with locales not being set correctly in the built image.
