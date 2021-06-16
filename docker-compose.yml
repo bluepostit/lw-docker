@@ -2,10 +2,12 @@
   version: "3"
   services:
     lewagon:
-      image: runfire9/lw-bootcamp
+      image: runfire9/lw-bootcamp:slimmer
       container_name: lewagon
       volumes:
-        - home-volume:/home/wagon
+        - ~/code/lewagon/env/home:/home/wagon
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/timezone:/etc/timezone:ro
       restart: on-failure
       command: ["sleep","infinity"]
 
