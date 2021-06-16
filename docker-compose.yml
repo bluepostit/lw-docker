@@ -5,7 +5,7 @@
       image: runfire9/lw-bootcamp:slimmer
       container_name: lewagon
       volumes:
-        - ~/code/lewagon/env/home:/home/wagon
+        - ${LW_HOME_PATH}:/home/wagon
         - /etc/localtime:/etc/localtime:ro
         - /etc/timezone:/etc/timezone:ro
       restart: on-failure

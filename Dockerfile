@@ -3,15 +3,21 @@ FROM ubuntu:groovy
 ENV USER wagon
 ARG UID=1000
 
-RUN apt update && apt install -y curl gpg && \
-  echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
+  locale-gen && \
+  apt update && apt install -y curl gpg && \
+  echo 'debconf debconf/frontend select noninteractive' | debconf-set-selections && \
   # Repository for gh
   curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg && \
   echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 
 # Install git, zsh, postgresql, libraries for Ruby, etc.
 RUN apt update && apt install -y \
-  git apt-transport-https apt-utils unzip zsh curl vim \
+  locales git apt-transport-https apt-utils unzip zsh curl vim \
   imagemagick jq build-essential software-properties-common sudo \
   tklib zlib1g-dev libssl-dev libffi-dev libxml2 libxml2-dev libxslt1-dev \
   libreadline-dev postgresql-client postgresql-common postgresql-contrib gh && \
