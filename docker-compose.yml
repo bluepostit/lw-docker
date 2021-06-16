@@ -19,9 +19,5 @@
         - USER=${USER}
       volumes:
         - ${LW_DATABASE_PATH}:/var/lib/postgresql/data/
-        # - /etc/passwd:/etc/passwd:ro
         - ./init-database-user.sh:/docker-entrypoint-initdb.d/init-database-user.sh
 
-  volumes:
-    home-volume:
-      external: true

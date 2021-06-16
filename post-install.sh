@@ -1,14 +1,14 @@
 #!/bin/bash
 
-# NB: Before you run this script:
-# In your Docker HOST, clone your dotfiles repo into the container's ~/code/ directory
+# NB: Before you run this script, run `post-install-host.sh` on your Docker host.
 
 # Install Oh My Zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
 
 mkdir -p ~/code
 
-# Install dotfiles
+# Install dotfiles (which have already been cloned)
 cd ~/code/dotfiles
 zsh install.sh
 

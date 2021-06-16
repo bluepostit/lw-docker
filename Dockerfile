@@ -7,24 +7,28 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
-  locale-gen && \
-  apt update && apt install -y curl gpg && \
+RUN apt update && apt install -y curl gpg locales && \
   echo 'debconf debconf/frontend select noninteractive' | debconf-set-selections && \
   # Repository for gh
   curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg && \
-  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-
-# Install git, zsh, postgresql, libraries for Ruby, etc.
-RUN apt update && apt install -y \
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null && \
+  # Locale setup
+  sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
+  locale-gen && \
+  \
+  # Install git, zsh, postgresql, libraries for Ruby, etc.
+  apt update && apt install -y \
   locales git apt-transport-https apt-utils unzip zsh curl vim \
   imagemagick jq build-essential software-properties-common sudo \
   tklib zlib1g-dev libssl-dev libffi-dev libxml2 libxml2-dev libxslt1-dev \
   libreadline-dev postgresql-client postgresql-common postgresql-contrib gh && \
-  apt clean
+  apt clean && \
+  \
+  # Create user
+  useradd --create-home --shell /usr/bin/zsh --uid "$UID" $USER && \
+  chown -R $USER /home/${USER}
 
-# Create user
-RUN useradd --create-home --shell /usr/bin/zsh --uid "$UID" $USER
+COPY ./post-install.sh /opt/
 
 # RUN mv /bin/sh /bin/sh-old && ln -s /bin/bash /bin/sh
 
