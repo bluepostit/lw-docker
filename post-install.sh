@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# NB: Before you run this script, run `post-install-host.sh` on your Docker host.
+# Don't run this script first!
+# Please run install.sh on your Docker host.
+# It will copy this script to your Docker container, and run it there.
 
 # Install Oh My Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended

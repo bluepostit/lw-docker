@@ -15,6 +15,15 @@ help()
   echo "-h                       Show this help message."
 }
 
+success()
+{
+  echo "Installation complete!"
+  echo "You can browse or edit your files inside ${CONTAINER_MOUNTED_HOME_PATH}."
+  echo "To get a terminal in your container, run: "
+  echo "    docker exec -ti -uwagon lewagon zsh"
+  echo "Or, just run ./lewagon"
+}
+
 # Check if help arg is included:
 while getopts ":g:p:h" opt; do
   if [ $opt == "h" ]; then
@@ -73,4 +82,4 @@ cp ./post-install.sh $CONTAINER_MOUNTED_HOME_PATH/
 echo "Running post-install script inside container..."
 docker exec -ti -uwagon lewagon zsh -c "cd /home/wagon && zsh post-install.sh"
 
-# Next, run `post-install.sh` in the terminal you just opened.
+success

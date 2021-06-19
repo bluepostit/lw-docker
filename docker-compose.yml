@@ -2,7 +2,7 @@
   version: "3"
   services:
     lewagon:
-      image: runfire9/lw-bootcamp:slimmer
+      image: runfire9/lw-bootcamp:latest
       container_name: lewagon
       volumes:
         - ${LW_HOME_PATH}:/home/wagon

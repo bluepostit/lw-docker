@@ -26,7 +26,8 @@ RUN apt-get update && apt-get install -y curl gpg locales && \
   locales git apt-transport-https apt-utils unzip zsh curl vim \
   imagemagick jq build-essential software-properties-common sudo \
   tklib zlib1g-dev libssl-dev libffi-dev libxml2 libxml2-dev libxslt1-dev \
-  libreadline-dev postgresql-client postgresql-common postgresql-contrib gh && \
+  libreadline-dev gh \
+  postgresql-client libpq-dev postgresql-common postgresql-contrib && \
   apt clean && \
   \
   # Create user
