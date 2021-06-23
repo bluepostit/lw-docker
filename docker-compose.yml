@@ -4,6 +4,7 @@
     lewagon:
       image: runfire9/lw-bootcamp:latest
       container_name: lewagon
+      network_mode: host
       volumes:
         - ${LW_HOME_PATH}:/home/wagon
         - /etc/localtime:/etc/localtime:ro
@@ -16,7 +17,8 @@
       container_name: lewagon-postgres
       environment:
         - POSTGRES_PASSWORD=${LW_POSTGRES_ROOT_PASSWORD}
-        - USER=${USER}
+        - USER=wagon
+      network_mode: host
       volumes:
         - ${LW_DATABASE_PATH}:/var/lib/postgresql/data/
         - ./init-database-user.sh:/docker-entrypoint-initdb.d/init-database-user.sh
