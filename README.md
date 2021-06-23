@@ -40,3 +40,25 @@
 
 ## A note about Git
 - Currently, the script leaves out any Git setup. The assumption is that you will setup your Git access (including `gh`, SSH keys, etc.) on your Docker host machine, and that you will do any Git-related steps there, and not inside the Docker container. This may change in future versions.
+
+## A note about Rails
+- Rails looks for the Postgres database on a Unix socket by default. This won't work for a containerized solution as provided here.
+- Instead, the Postgres database is running in its own container, using the networking ports of the host machine. This means that you can access it as if it were listening on `localhost`.
+- This requires a small change to the Rails setup templates provided by Le Wagon: you need to specify `port: localhost`.
+- To this end, I have forked the relevant repository and made this change. To use it, run your `rails new` command like so:
+
+```bash
+# Using the Minimal template:
+rails new \        
+  --database postgresql \
+  --webpack \
+  -m https://raw.githubusercontent.com/bluepostit/rails-templates/docker/minimal.rb \
+  test-app
+
+# Using the Devise template:
+rails new \       
+  --database postgresql \
+  --webpack \
+  -m https://raw.githubusercontent.com/bluepostit/rails-templates/docker/devise.rb \
+  test-devise-app
+```
