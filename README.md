@@ -44,7 +44,20 @@ docker-compose pull && docker-compose up -d
 ```
 
 ## Daily running
-- You should be able to run `ruby`, `rake`, and `rails` commands as needed for your daily development needs.
+### Start the container
+- You will have to re-start the container when your computer restarts or if Docker or your container should ever crash.
+- (You could create a `systemd` service to automatically restart the process if you like)
+
+```bash
+docker-compose up -d
+```
+
+### Open a command line in the container
+- To enter the container and open a command line, run `./lewagon` from this directory.
+- You might want to add a symlink to the `PATH` on your Docker host, to allow you to easily jump into the container whenever you need to.
+
+### Regular commands
+- You should be able to run `ruby`, `rake`, and `rails` commands inside your container as needed for your daily development needs.
 - Graphical programs like VS Code cannot be run from inside the container. You will need to first open a terminal in the Docker host to the mounted home directory of your container. Then, change to the directory of the files you need to work on. Run `code` to open VS Code in the directory. Since this directory is mounted from your Docker container, all changes you make will apply to the running Docker container automatically, too. 
 
 ## A note about Git
