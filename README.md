@@ -19,18 +19,6 @@
     ```
 2. Fill in values for all variables in your `.env` file. For `USER`, give your Linux user name.
 
-## Build Docker image
-- You need to be authenticated for Docker.
-- The commands below assume you are authenticated for the given account.
-
-```bash
-# Build the image
-docker build . --no-cache -t runfire9/lw-bootcamp:latest
-
-# Push it to dockerhub
-docker push runfire9/lw-bootcamp:latest
-```
-
 ## Install
 1. Run the installation script:
     ```bash
@@ -81,4 +69,19 @@ rails new \
   --webpack \
   -m https://raw.githubusercontent.com/bluepostit/rails-templates/docker/devise.rb \
   test-devise-app
+```
+
+---
+
+## Build Docker image
+- This step is not needed to get a running container. I've included it as a quick reference for myself.
+- You need to be authenticated for Docker.
+- The commands below assume you are authenticated for the given account.
+
+```bash
+# Build the image
+docker build . --no-cache -t runfire9/lw-bootcamp:latest
+
+# Push it to dockerhub
+docker push runfire9/lw-bootcamp:latest
 ```
