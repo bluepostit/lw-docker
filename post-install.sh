@@ -8,6 +8,9 @@ RUBY_VERSION="2.7.3"
 RAILS_VERSION="6.0"
 NODE_VERSION="14.15"
 
+NVM_DIR=/home/$USER/.nvm
+NVM_INSTALL_PATH=$NVM_DIR/versions/node/v$NODE_VERSION
+
 # Install Oh My Zsh
 install_oh_my_zsh()
 {
@@ -53,9 +56,6 @@ install_ruby_and_gems()
 # Install nvm, node, and yarn
 install_nvm_and_node()
 {
-  NVM_DIR=/home/$USER/.nvm
-  NVM_INSTALL_PATH=$NVM_DIR/versions/node/v$NODE_VERSION
-
   curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | zsh
   zsh -c " \
     source $NVM_DIR/nvm.sh \
