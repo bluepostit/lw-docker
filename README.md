@@ -45,7 +45,7 @@ docker-compose pull && docker-compose up -d
 
 ## Daily running
 ### Start the container
-- You will have to re-start the container when your computer restarts or if Docker or your container should ever crash.
+- You will have to restart the container when your computer restarts or if Docker or your container should ever crash.
 - (You could create a `systemd` service to automatically restart the process if you like)
 
 ```bash
