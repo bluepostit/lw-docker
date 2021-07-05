@@ -10,7 +10,8 @@
 - I do not recommend configuring Docker for rootless use, as this seemed to cause me issues.
 - Rather, I suggest simply adding your user to the `docker` group, as specified in the post-install instructions for Docker.
 - You will also need to have forked Le Wagon's `dotfiles` repository in your GitHub account.
-- You should also have Git and GitHub access set up on your machine as you would for regular development, including your SSH key and GitHub's `gh` command-line app.
+- You should also have Git and GitHub access set up on your machine as you would for regular development, including your SSH key.
+- You will need to have installed GitHub's `gh` command-line app and logged in to it.
 
 ## Configure
 1. Copy the sample environment-variable file to a new file named `.env`:
