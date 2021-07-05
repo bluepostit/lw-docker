@@ -19,6 +19,18 @@
     ```
 2. Fill in values for all variables in your `.env` file. For `USER`, give your Linux user name.
 
+## Build Docker image
+- You need to be authenticated for Docker.
+- The commands below assume you are authenticated for the given account.
+
+```bash
+# Build the image
+docker build . --no-cache -t runfire9/lw-bootcamp:latest
+
+# Push it to dockerhub
+docker push runfire9/lw-bootcamp:latest
+```
+
 ## Install
 1. Run the installation script:
     ```bash
@@ -33,6 +45,14 @@
     This script will run your `dotfiles` installer (but not the Git setup script!), and install Oh My Zsh, Ruby with gems, Node, and Yarn inside your new Docker container.
 
 3. If the above steps complete without error, you should have a working Ubuntu environment capable of building and running Ruby and Rails apps for the Le Wagon bootcamp.
+
+## Update to latest image
+- You should only run the installation script once.
+- To update your Docker image to the latest released version, run the following:
+
+```bash
+docker-compose pull && docker-compose up -d
+```
 
 ## Daily running
 - You should be able to run `ruby`, `rake`, and `rails` commands as needed for your daily development needs.
