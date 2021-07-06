@@ -9,6 +9,7 @@
         - ${LW_HOME_PATH}:/home/wagon
         - /etc/localtime:/etc/localtime:ro
         - /etc/timezone:/etc/timezone:ro
+        - ${SSH_PK_PATH}:/home/wagon/.ssh/id.pk:ro
       restart: on-failure
       command: ["sleep","infinity"]
 
@@ -19,6 +20,7 @@
         - POSTGRES_PASSWORD=${LW_POSTGRES_ROOT_PASSWORD}
         - USER=wagon
       network_mode: host
+      restart: on-failure
       volumes:
         - ${LW_DATABASE_PATH}:/var/lib/postgresql/data/
         - ./init-database-user.sh:/docker-entrypoint-initdb.d/init-database-user.sh
