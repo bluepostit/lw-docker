@@ -6,7 +6,7 @@
 
 RUBY_VERSION="2.7.3"
 RAILS_VERSION="6.0"
-NODE_VERSION="14.15"
+NODE_VERSION="14.15.5"
 
 # Install Oh My Zsh
 install_oh_my_zsh()
