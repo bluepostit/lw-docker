@@ -8,9 +8,6 @@ RUBY_VERSION="2.7.3"
 RAILS_VERSION="6.0"
 NODE_VERSION="14.15"
 
-NVM_DIR=/home/$USER/.nvm
-NVM_INSTALL_PATH=$NVM_DIR/versions/node/v$NODE_VERSION
-
 # Install Oh My Zsh
 install_oh_my_zsh()
 {
@@ -24,6 +21,16 @@ install_dotfiles()
   # Install dotfiles (which have already been cloned)
   cd ~/code/dotfiles
   zsh install.sh
+}
+
+setup_git_and_github()
+{
+  # Run the Git setup script inside dotfiles
+  cd ~/code/dotfiles
+  zsh git_setup.sh
+
+  # Log in to gh (GitHub's command-line tool)
+  gh auth login -s 'user:email'
 }
 
 # Install rbenv
@@ -56,6 +63,9 @@ install_ruby_and_gems()
 # Install nvm, node, and yarn
 install_nvm_and_node()
 {
+  NVM_DIR=/home/$USER/.nvm
+  NVM_INSTALL_PATH=$NVM_DIR/versions/node/v$NODE_VERSION
+
   curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | zsh
   zsh -c " \
     source $NVM_DIR/nvm.sh \
@@ -64,6 +74,9 @@ install_nvm_and_node()
 
 install_yarn()
 {
+  NVM_DIR=/home/$USER/.nvm
+  NVM_INSTALL_PATH=$NVM_DIR/versions/node/v$NODE_VERSION
+
   NODE_PATH=${NVM_INSTALL_PATH}/lib/node_modules
   PATH=${NVM_INSTALL_PATH}/bin:$PATH
 
@@ -74,6 +87,7 @@ install_everything()
 {
   install_oh_my_zsh
   install_dotfiles
+  setup_git_and_github
   install_rbenv
   install_ruby_and_gems
   install_nvm_and_node
