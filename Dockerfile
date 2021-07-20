@@ -1,7 +1,12 @@
 FROM ubuntu:groovy
 
-ENV USER wagon
+ARG RUBY_VERSION=2.7.3
+ARG RAILS_VERSION=6.0
+ARG NODE_VERSION=14.15.5
+
+ARG USER=wagon
 ARG UID=1000
+ENV HOME=/home/${USER}
 
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
@@ -31,5 +36,29 @@ RUN apt-get update && apt-get install -y curl gpg locales && \
   # Create user
   useradd --create-home --shell /usr/bin/zsh --uid "$UID" $USER && \
   chown -R $USER /home/${USER}
+
+  # Install rbenv, Ruby and gems
+  RUN git clone https://github.com/rbenv/rbenv.git ${HOME}/.rbenv && \
+  git clone https://github.com/rbenv/ruby-build.git \
+    ${HOME}/.rbenv/plugins/ruby-build && \
+  export PATH="${HOME}/.rbenv/bin:${PATH}" && \
+  ${HOME}/.rbenv/bin/rbenv install ${RUBY_VERSION} && \
+  ${HOME}/.rbenv/bin/rbenv global ${RUBY_VERSION} && \
+  ${HOME}/.rbenv/shims/gem install \
+    rake \
+    bundler \
+    rspec \
+    rubocop \
+    rubocop-performance \
+    pry \
+    pry-byebug \
+    colored \
+    http \
+    nokogiri \
+    rails:${RAILS_VERSION}
+  # Install nvm, node and yarn
+
+
+
 
 # COPY ./post-install.sh /opt/
