@@ -67,9 +67,6 @@ docker-compose up -d
 echo "Changing owner of ${CONTAINER_MOUNTED_HOME_PATH} to ${USER}..."
 sudo chown -R $USER $CONTAINER_MOUNTED_HOME_PATH
 
-# Create this file to avoid the zsh post-install config prompt on first login
-touch $CONTAINER_MOUNTED_HOME_PATH/.zshrc
-
 # Clone your dotfiles repo into the container's ~/code/ directory
 echo "Cloning your dotfiles repository to ${CONTAINER_MOUNTED_HOME_PATH}/code/dotfiles..."
 gh repo clone $GITHUB_USERNAME/dotfiles $CONTAINER_MOUNTED_HOME_PATH/code/dotfiles

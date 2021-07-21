@@ -2,7 +2,9 @@ FROM ubuntu:groovy
 
 ARG RUBY_VERSION=2.7.3
 ARG RAILS_VERSION=6.0
-ARG NODE_VERSION=14.15.5
+# This is named differently to avoid triggering an automatic
+# installation of Node by nvm.
+ARG NODE_VERSION_STRING=14.15.5
 
 ARG USER=wagon
 ARG UID=1000
@@ -35,13 +37,13 @@ RUN apt-get update && apt-get install -y curl gpg locales && \
   \
   # Create user
   useradd --create-home --shell /usr/bin/zsh --uid "$UID" $USER && \
-  chown -R $USER /home/${USER}
-
+  chown -R $USER /home/${USER} && \
+  \
   # Install rbenv, Ruby and gems
-  RUN git clone https://github.com/rbenv/rbenv.git ${HOME}/.rbenv && \
+  git clone https://github.com/rbenv/rbenv.git ${HOME}/.rbenv && \
   git clone https://github.com/rbenv/ruby-build.git \
     ${HOME}/.rbenv/plugins/ruby-build && \
-  export PATH="${HOME}/.rbenv/bin:${PATH}" && \
+  PATH="${HOME}/.rbenv/bin:${PATH}" && \
   ${HOME}/.rbenv/bin/rbenv install ${RUBY_VERSION} && \
   ${HOME}/.rbenv/bin/rbenv global ${RUBY_VERSION} && \
   ${HOME}/.rbenv/shims/gem install \
@@ -55,10 +57,17 @@ RUN apt-get update && apt-get install -y curl gpg locales && \
     colored \
     http \
     nokogiri \
-    rails:${RAILS_VERSION}
+    rails:${RAILS_VERSION} && \
+  \
+  # Install Oh My Zsh
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended && \
+  \
   # Install nvm, node and yarn
-
-
-
-
-# COPY ./post-install.sh /opt/
+  curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | zsh && \
+  NVM_DIR=${HOME}/.nvm && \
+  NODE_VERSION=14.15.5 && \
+    zsh -c "source ${NVM_DIR}/nvm.sh \
+    && nvm install ${NODE_VERSION_STRING} && \
+    source ${HOME}/.zshrc && \
+    npm install --global yarn" && \
+  echo "Done"
