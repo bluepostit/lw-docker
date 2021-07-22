@@ -1,0 +1,5 @@
+#!/bin/bash
+
+USER=wagon
+
+docker exec -w "/home/${USER}" -ti lewagon zsh

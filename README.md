@@ -68,13 +68,9 @@ ln -s <path to the lw-docker directory>/lewagon ~/.local/bin/lwc
 ```
 
 ### Root access
-- There is no `sudo` access properly set up in the container for the moment. To enter the container as `root`, run this command:
+- There is no `sudo` access properly set up in the container for the moment. To enter the container as `root`, run `./lewagon-root` from this directory.
 
-```bash
-docker exec -ti lewagon zsh
-```
-
-- Be sure to `exit` once you have finished your administrative task. Please be aware that any changes you make to the system will not be preserved if you reinstall the image or update it.
+- Be sure to `exit` once you have finished your administrative task. Please be aware that any changes you make to the system, eg. installing new packages via `apt`, **will not be preserved** if you reinstall the image or update it.
 
 ### Regular commands
 - You should be able to run `ruby`, `rake`, `rubocop`, `rails`, and similar commands inside your container as needed for your daily development needs.
