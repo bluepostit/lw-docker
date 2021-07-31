@@ -11,7 +11,8 @@
         - /etc/timezone:/etc/timezone:ro
         - ${SSH_PK_PATH}:/home/wagon/.ssh/id_ed25519:ro
       restart: on-failure
-      command: ["sleep","infinity"]
+      stdin_open: true
+      tty: true
 
     lewagon-postgres:
       image: postgres:12-alpine
@@ -24,4 +25,3 @@
       volumes:
         - ${LW_DATABASE_PATH}:/var/lib/postgresql/data/
         - ./init-database-user.sh:/docker-entrypoint-initdb.d/init-database-user.sh
-
