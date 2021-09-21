@@ -4,7 +4,7 @@
 # Please run install.sh on your Docker host.
 # It will copy this script to your Docker container, and run it there.
 
-RUBY_VERSION="2.7.3"
+RUBY_VERSION="2.7.4"
 RAILS_VERSION="6.0"
 NODE_VERSION="14.15.5"
 
